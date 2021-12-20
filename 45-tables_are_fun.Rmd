@@ -1,0 +1,67 @@
+# Tables are fun
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+# library(gt)  # https://gt.rstudio.com/
+```
+
+
+Tables can be a challenge to render
+
+https://bookdown.org/yihui/bookdown/tables.html
+
+## Paged tables are interactive but only work in .nb.html
+
+```{r}
+starwars
+```
+
+
+## non-interactive
+
+Old school, BUT easily cross functional with PDF and HTML alike
+
+```{r tidy=FALSE}
+knitr::kable(
+  head(starwars %>% select(1:6), 8), caption = 'Another nice table!',
+  booktabs = TRUE
+)
+```
+
+## Great Tables
+
+the [`gt` package](https://gt.rstudio.com/) is awesome but doesn't work in PDF.  Additionally, the `knitr::kable()` function has some organizatonal and referencing features that you may prefer to have handled automatically.  
+
+Until `gt` moves beyond the development you may want to avoid this approach.
+
+```{r eval=FALSE}
+starwars %>% 
+  select(1:4) %>% 
+  slice_head(n = 8) %>% 
+  gt() %>% 
+  tab_header(
+    title = md("**_Star Wars_ characters**"),
+    subtitle = "subtitles are cool"
+    ) %>% 
+  tab_source_note(
+    source_note = md("Source:  `dplyr::starwars`")
+    ) %>% 
+  tab_options(heading.background.color = "darkseagreen") 
+```
+
+
+
+None of this was based on a book by John Little [@Little2018].
+
+
+## Math Expressions
+
+You can make Inline LaTeX equations
+
+$$f(k) = {n \choose k} p^{k} (1-p)^{n-k}$$
+
+The above is done with   `$$f(k) = {n \choose k} p^{k} (1-p)^{n-k}$$`
+
+[Recommendation to R Markdown syntax unless](https://bookdown.org/yihui/rmarkdown/rticles-latex.html) there are specific requirements for using LaTeX.  
+
+Read more about [Markdown syntax for Math expressions](https://bookdown.org/yihui/bookdown/markdown-syntax.html#math-expressions)
